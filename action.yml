@@ -55,6 +55,6 @@ runs:
       shell: bash
       env:
         USERNAME: ${{ inputs.username }}
-        PASSWORD: ${{ inputs.password }
+        PASSWORD: ${{ inputs.password }}
         HOST: ${{ inputs.host }}
         IMAGE_TAG: ${{ inputs.image_tag }}
