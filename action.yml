@@ -20,8 +20,6 @@ runs:
   using: "composite"
   steps:
     - run: |
-        set -x
-        
         function log() {
             S=$1
             echo $S | sed 's/./& /g'
