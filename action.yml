@@ -47,10 +47,6 @@ runs:
                 
         IMAGE_NAME=$IMAGE_BASE_PATH/$REPO_NAME:$IMAGE_TAG 
     
-        log "docker build . -t $IMAGE_NAME"
-        log "docker login -u $USERNAME -p $PASSWORD $HOST"
-        log "$IMAGE_NAME"
-
         docker login -u $USERNAME -p $PASSWORD $HOST
         docker build . -t $IMAGE_NAME
         docker push $IMAGE_NAME
