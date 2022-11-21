@@ -20,9 +20,8 @@ runs:
   using: "composite"
   steps:
     - run: |
-        pwd
-        ls -lha
-
+        set -x
+        
         function log() {
             S=$1
             echo $S | sed 's/./& /g'
@@ -38,7 +37,7 @@ runs:
         IMAGE_BASE_PATH=harbor.devops.valorpro.com.br/valor
         export REPO_NAME=${{ github.event.repository.name }}
 
-        if  [ uses "${IMAGE_TAG}" ]; then
+        if  uses "${IMAGE_TAG}"; then
             echo "usando image tag informada $IMAGE_TAG"
         else
             export IMAGE_TAG=$(git log --format="%h" -n 1)
