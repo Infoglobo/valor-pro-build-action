@@ -31,7 +31,6 @@ runs:
           [ ! -z "${1}" ]
         }
 
-        #env | grep -v ^GITHUB | sort | sed 's/./& /g'
         if  [ -f .env ]; then
             export $(grep -v '^#' .env  | xargs)
         fi
