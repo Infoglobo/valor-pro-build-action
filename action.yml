@@ -1,6 +1,6 @@
 name: valor-pro-build-action
 description: docker build and push action.
-author: Brian Douglas
+author: valor-pro 
 branding:
   icon: 'thumbs-up'
   color: 'white'
@@ -20,18 +20,41 @@ runs:
   using: "composite"
   steps:
     - run: |
-        env | grep -v ^GITHUB | sort
+        pwd
+        ls -lha
+
+        function log() {
+            S=$1
+            echo $S | sed 's/./& /g'
+        }
+        uses() {
+          [ ! -z "${1}" ]
+        }
+
+        #env | grep -v ^GITHUB | sort | sed 's/./& /g'
         if  [ -f .env ]; then
             export $(grep -v '^#' .env  | xargs)
         fi
-        
-        echo "docker build . -t $IMAGE_NAME:$IMAGE_TAG"
-        docker build . -t $IMAGE_NAME:$IMAGE_TAG
-        docker login -u $e.USERNAME -p $secrets.DOCKER_PASSWORD $HOST
-        docker push $IMAGE_NAME:$IMAGE_TAG
+        set -x 
+        IMAGE_BASE_PATH=harbor.devops.valorpro.com.br/valor
+        REPO_NAME=${{ github.event.repository.name }}
+
+        if ! [[ uses "${IMAGE_TAG}" ]]; then
+            IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+        fi
+                
+        IMAGE_NAME=$IMAGE_BASE_PATH/$REPO_NAME:$IMAGE_TAG 
+    
+        log "docker build . -t $IMAGE_NAME"
+        log "docker login -u $USERNAME -p $PASSWORD $HOST"
+        log "$IMAGE_NAME"
+
+        docker login -u $USERNAME -p $PASSWORD $HOST
+        docker build . -t $IMAGE_NAME
+        docker push $IMAGE_NAME
       shell: bash
       env:
-        USERNAME: "${{ inputs.username }}"
-        PASSWORD: "${{ inputs.password }}"
-        HOST: "${{ inputs.password }}"
-
+        USERNAME: ${{ inputs.username }}
+        PASSWORD: ${{ inputs.password }
+        HOST: ${{ inputs.host }}
+        IMAGE_TAG: ${{ inputs.image_tag }}
