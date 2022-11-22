@@ -28,3 +28,4 @@ runs:
         PASSWORD: ${{ inputs.password }}
         HOST: ${{ inputs.host }}
         IMAGE_TAG: ${{ inputs.image_tag }}
+        REPO_NAME: ${{ github.event.repository.name }}

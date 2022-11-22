@@ -13,7 +13,7 @@ if  [ -f .env ]; then
 fi
 set -x 
 IMAGE_BASE_PATH=harbor.devops.valorpro.com.br/valor
-export REPO_NAME=${{ github.event.repository.name }}
+#export REPO_NAME=${{ github.event.repository.name }}
 
 if  uses "${IMAGE_TAG}"; then
     echo "usando image tag informada $IMAGE_TAG"
