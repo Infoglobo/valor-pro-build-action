@@ -15,14 +15,14 @@ set -x
 IMAGE_BASE_PATH=harbor.devops.valorpro.com.br/valor
 #export REPO_NAME=${{ github.event.repository.name }}
 
-if  uses "${IMAGE_TAG}"; then
-    echo "usando image tag informada $IMAGE_TAG"
+if  uses "${VALOR_PRO_VERSION}"; then
+    echo "usando image tag informada $VALOR_PRO_VERSION"
 else
-    export IMAGE_TAG=$(git log --format="%h" -n 1)
-    echo "usando image tag gerada $IMAGE_TAG"
+    export VALOR_PRO_VERSION=$(git log --format="%h" -n 1)
+    echo "usando image tag gerada $VALOR_PRO_VERSION"
 fi
         
-export IMAGE_NAME=$IMAGE_BASE_PATH/$REPO_NAME:$IMAGE_TAG 
+export IMAGE_NAME=$IMAGE_BASE_PATH/$REPO_NAME:$VALOR_PRO_VERSION 
 
 docker login -u $USERNAME -p $PASSWORD $HOST
 docker build . -t $IMAGE_NAME

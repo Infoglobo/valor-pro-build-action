@@ -27,5 +27,5 @@ runs:
         USERNAME: ${{ inputs.username }}
         PASSWORD: ${{ inputs.password }}
         HOST: ${{ inputs.host }}
-        IMAGE_TAG: ${{ inputs.image_tag }}
+        VALOR_PRO_VERSION: ${{ inputs.VALOR_PRO_VERSION }}
         REPO_NAME: ${{ github.event.repository.name }}
